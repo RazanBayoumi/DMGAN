@@ -133,7 +133,7 @@ class condGANTrainer(object):
                 Gname = cfg.TRAIN.NET_G
                 for i in range(len(netsD)):
                     s_tmp = Gname[:Gname.rfind('/')]
-                    Dname = '%s/netD%d.pth' % (s_tmp, i)
+                    Dname = '%s/netD%d_%d.pth' % (s_tmp, i,epoch-1)
                     print('Load D from: ', Dname)
                     state_dict = \
                         torch.load(Dname, map_location=lambda storage, loc: storage)
@@ -344,6 +344,9 @@ class condGANTrainer(object):
             print('-' * 89)
             if epoch % cfg.TRAIN.SNAPSHOT_INTERVAL == 0:  # and epoch != 0:
                 self.save_model(netG, avg_param_G, netsD, epoch)
+                file1 = open("/content/drive/MyDrive/Trained_Models/Testing_FacesDataset/losses.txt","a")
+                file1.write(str(epoch) + ' ' + str(D_logs) + ' ' + str(G_logs) + ' ' + "{:.2f}".format(round(errD_total.item(), 2))+ ' '+ "{:.2f}".format(round(errG_total.item(), 2))+'\n')
+                file1.close()
 
         self.save_model(netG, avg_param_G, netsD, self.max_epoch)
 
