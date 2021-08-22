@@ -535,7 +535,7 @@ class G_NET(nn.Module):
             self.h_net2 = NEXT_STAGE_G(ngf, nef, ncf, 64)
             self.img_net2 = GET_IMAGE_G(ngf)
         if cfg.TREE.BRANCH_NUM > 2:
-            self.h_net3 = NEXT_STAGE_G1(ngf, nef, ncf, 128)
+            self.h_net3 = NEXT_STAGE_G(ngf, nef, ncf, 128)
             self.img_net3 = GET_IMAGE_G(ngf)
 
     def forward(self, z_code, sent_emb, word_embs, mask, cap_lens):
