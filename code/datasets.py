@@ -145,7 +145,8 @@ class TextDataset(data.Dataset):
     def load_captions(self, data_dir, filenames):
         all_captions = []
         for i in range(len(filenames)):
-            cap_path = '%s/text/%s.txt' % (data_dir, filenames[i])
+            name = filenames[i].rsplit('\r')[0]
+            cap_path = '%s/text/%s.txt' % (data_dir, name)
             with open(cap_path, "r") as f:
                 captions = f.read().decode('utf8').split('\n')
                 cnt = 0
@@ -288,7 +289,7 @@ class TextDataset(data.Dataset):
 
     def __getitem__(self, index):
         #
-        key = self.filenames[index]
+        key = self.filenames[index].rsplit('\r')[0]
         cls_id = self.class_id[index]
         #
         if self.bbox is not None:
